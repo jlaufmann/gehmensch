@@ -5,3 +5,7 @@ because I don't use windows.
 It will enable mp3 file property editing as well as automatic playlist
 file compilation.
 Potentially more.
+
+16-June-2020
+mediamensch.py - audio file property editing
+gehmensch.py - to interface with my sony walkman
