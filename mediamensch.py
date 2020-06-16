@@ -15,12 +15,12 @@ from mutagen.mp3 import MP3
 
 def findext(fname):
 	if fname.find('.') == -1:
-		return ''
+		fext = ''
 	else:
 		for i in range(len(fname)):
 			if fname[i] == '.':
 				fext = fname[i:]
-		return fext
+	return fext
 
 
 def startextline(text):
@@ -50,29 +50,28 @@ filelist = []
 
 print(f"\nAudio File list: ")
 
-for mfile in os.listdir(fol_in):
-	if os.path.isfile(os.path.join(fol_in, mfile)):
+for filename in sorted(os.listdir(fol_in), key=str.lower):
+	if os.path.isfile(os.path.join(fol_in, filename)):
 		try:
-			audio = EasyID3(os.path.join(fol_in, mfile))
-			audio2 = MP3(os.path.join(fol_in, mfile))
+			audio = EasyID3(os.path.join(fol_in, filename))
 		except:
 			pass
 		else:
-			print(f"{mfile}")
-			filelist.append(mfile)
-			filelistf.append(os.path.relpath(os.path.join(fol_in, mfile))) # this looks very good!!!!
+			print(f"{filename}")
+			filelist.append(filename)
+			filelistf.append(os.path.relpath(os.path.join(fol_in, filename))) # this looks very good!!!!
 # the above line looks to return the path relative to where the gehmensch.py script is run!!!
-# filelist.append(os.path.abspath(os.path.join(fol_in, mfile))) # gives absolute path, not so relevant
+# filelist.append(os.path.abspath(os.path.join(fol_in, filename))) # gives absolute path, not so relevant
 
 if len(filelist) == 0:
 	print(f"NO AUDIO FILES FOUND!")
+	quit()
 
 for i in range(len(filelistf)):
-	filenamef = filelistf[i]
 	filename = filelist[i]
+	filenamef = filelistf[i]
 
 	audio = EasyID3(filenamef)
-	audio2 = MP3(filenamef)
 
 	print(f"\nFile:     {filename}")
 	try:
@@ -94,7 +93,7 @@ for i in range(len(filelistf)):
 		audio['title'] = 'unknown'
 	
 	try:
-		print(f"Length:   {int(audio2.info.length)} s")
+		print(f"Length:   {int(MP3(filenamef).info.length)} s")
 	except:
 		print(f"Length:   UNKNOWN!")
 	
