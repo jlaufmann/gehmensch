@@ -41,7 +41,7 @@ def startextline(text):
 	print(f"{stars1}{text}{stars2}")
 
 # files with these extensions will be added to the playlist:
-exts = ['.mp3']
+# exts = ['.mp3']
 
 os.system('cls' if os.name == 'nt' else 'clear')  # clearing the screen
 
@@ -61,24 +61,30 @@ else:
 	print(f"\nFor Folder: {str(os.getcwd()) + '/'}")
 
 filelistf = []
-
-print(f"\nAudio File list: ")
+filelist = []
 
 for filename in sorted(os.listdir(fol_in), key=str.lower):
-	if os.path.isfile(os.path.join(fol_in, filename)) and findext(filename).lower() in exts:
+	if os.path.isfile(os.path.join(fol_in, filename)):  #and findext(filename).lower() in exts:
 		try:
 			audio = EasyID3(os.path.join(fol_in, filename))
 		except:
-			pass
+			print(f"### NOT VALID: {filename}")
 		else:
-			print(f"{filename}")
+			filelist.append(filename)
 			filelistf.append(os.path.relpath(os.path.join(fol_in, filename)))
 
 if len(filelistf) == 0:
 	print(f"NO AUDIO FILES FOUND!")
 	quit()
 
-plistf = input(f"\nWhat is the playlist name?: ") + '.m3u'
+print(f"\nAudio File list: ")
+for filename in filelist:
+	print(f"{filename}")
+
+plist = input(f"\nWhat is the playlist name?: ")
+if plist.lower().endswith('.m3u'):
+	plist = plist[:-4]
+plistf = plist + '.m3u'
 
 with open(plistf, 'w') as fout:
 	fout.write(f"#EXTM3U\n\n")
@@ -92,8 +98,8 @@ with open(plistf, 'w') as fout:
 			length = int(MP3(filenamef).info.length)
 		except:
 			length = -1
+		finally:
+			fout.write(f"#EXTINF:{length}, {artist} - {title}")
+			fout.write(f"\n{filenamef}\n\n")
 
-		fout.write(f"#EXTINF:{length}, {artist} - {title}")
-		fout.write(f"\n{filenamef}\n\n")
-
-print(f"Playlist filename: {plistf}\n")
+print(f"\nPlaylist filename: {plistf}\n")

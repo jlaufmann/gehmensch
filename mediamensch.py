@@ -48,24 +48,25 @@ else:
 filelistf = []
 filelist = []
 
-print(f"\nAudio File list: ")
-
 for filename in sorted(os.listdir(fol_in), key=str.lower):
 	if os.path.isfile(os.path.join(fol_in, filename)):
 		try:
 			audio = EasyID3(os.path.join(fol_in, filename))
 		except:
-			pass
+			print(f"### NOT VALID: {filename}")
 		else:
-			print(f"{filename}")
 			filelist.append(filename)
 			filelistf.append(os.path.relpath(os.path.join(fol_in, filename))) # this looks very good!!!!
 # the above line looks to return the path relative to where the gehmensch.py script is run!!!
 # filelist.append(os.path.abspath(os.path.join(fol_in, filename))) # gives absolute path, not so relevant
 
 if len(filelist) == 0:
-	print(f"NO AUDIO FILES FOUND!")
+	print(f"\nNO VALID AUDIO FILES FOUND!")
 	quit()
+
+print(f"\nAudio File list: ")
+for filename in filelist:
+	print(f"{filename}")
 
 for i in range(len(filelistf)):
 	filename = filelist[i]

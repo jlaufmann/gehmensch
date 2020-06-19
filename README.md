@@ -1,11 +1,11 @@
-15-June-2020
-Nothing to see here yet.
-I'm working on a python program to interface with my sony walkman
+18-June-2020
+I'm working on a python program / scripts to interface with my sony walkman
 because I don't use windows.
 It will enable mp3 file property editing as well as automatic playlist
 file compilation.
 Potentially more.
-
-16-June-2020
+=======================================================
 mediamensch.py - audio file property editing
-gehmensch.py - to interface with my sony walkman
+playmensch.py - making playlist files from a folder containg audio files
+transmensch.py - transfer/delete files/playlists/folders from/to the sony walkman
+gehmensch.py - to interface with my sony walkman?
